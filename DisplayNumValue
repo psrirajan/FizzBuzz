@@ -1,42 +1,72 @@
 using System;
+using System.Linq;
 
-int[10] number = new int[10];
-void main()
+public class Program
 {
-var out = "";
-
+public static void Main()
+{
+int[] number = new int[10];
+string output = "";
 int count = 0;
 
+ 
+
 Console.WriteLine("Enter the numbers count");
-count = Console.ReadLine();
 
+count = Int32.Parse(Console.ReadLine());
+ 
 
-for (int i=0; i<count-1;i++)
+Console.WriteLine("Enter the numbers one by one");
+
+for (int i=0; i<=count-1;i++)
 {
-  number[i] = Console.ReadLine();
-
-  if (number[i] == 1)
-  {
-    out = "Divided 1 By 3" + System.Environment.NewLine + "Divided 1 By 5";
-  }
-  else if (number[i] == "" || number[i] == 'A')
-  {
-    out = "Invalid Item";
-  }
-  else if (number[i] % 3 == 0 )
-      out = "Fizz";
-  }
-  else if (number[i] % 5 == 0) 
-  {
-      out = "Buzz";
-  }
-  else if (number[i] % 3 == 0) && (number[i] % 5 == 0))
-  {
-    out = "FizzBuzz";
-  }
-  else if (number[i] % 3 != 0 && number[i] % 5 != 0 )
-    out = "Divided " + number[i] + " By 3 " + System.Environment.NewLine + "Divided " + number[i]  + " By 5 ";
+  number[i] = Int32.Parse(Console.ReadLine());
 }
-  Console.WriteLine("output : " + out);
+
+for (int j=0;j<=count-1;j++)
+{
+ 
+  if (number[j] == 1)
+  {
+    output = "Divided 1 By 3" + System.Environment.NewLine + "Divided 1 By 5";
+  Console.WriteLine("output : " + output);
+  }
+  else if (( number[j] == 0 ) || (number[j] == 'A'))
+  {
+ output = "Invalid Item";
+  Console.WriteLine("output : " + output);
+  }
+  else if ((number[j] % 3 == 0) && (number[j] % 5 == 0 ))
+  {
+ output = "FizzBuzz";
+   Console.WriteLine("output : " + output);
+  }
+  else if (number[j] % 3 == 0 && (number[j] % 5 != 0) )
+  {
+ output = "Fizz";
+      Console.WriteLine("output : " + output);
+  }
+  else if (number[j] % 5 == 0 && (number[j] % 3 != 0)) 
+  {
+ output = "Buzz";
+      Console.WriteLine("output : " + output);
+  }
+  
+  else if ((number[j] % 3 != 0) && (number[j] % 5 != 0 ))
+  {
+ output = "Divided " + number[j] + " By 3 " + System.Environment.NewLine + "Divided " + number[j]  + " By 5 ";
+      Console.WriteLine("output : " + output);
+
+  }
+ 
+ else
+ {
+output = "The input is < 0";
+Console.WriteLine("output : " + output);
+ }
+}
+
+ }
 
 }
+
