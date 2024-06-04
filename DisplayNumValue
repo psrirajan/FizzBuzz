@@ -1,72 +1,75 @@
 using System;
-using System.Linq;
 
-public class Program
-{
-public static void Main()
-{
-int[] number = new int[10];
-string output = "";
-int count = 0;
+/* Create an interface for injecting wherever needed for code reusability */ 
+public interface IFizzBuzzRule
+    {
+        bool Check(int number);
+        string GetResult(int number);
+    }
 
- 
+   /* Create a FizzBuzz class then inject IFizzBuzzRule Interface to do the operation for divided by 3 */
+    class FizzRule : IFizzBuzzRule
+    {
+        public bool Check(int number) => number % 3 == 0;
+        public string GetResult(int number) => "Fizz";
+    }
 
-Console.WriteLine("Enter the numbers count");
+    /* Create BuzzRule class then inject IFizzBuzz Ibterface to do the operation divided by 5 */
+    class BuzzRule : IFizzBuzzRule
+    {
+        public bool Check(int number) => number % 5 == 0;
+        public string GetResult(int number) => "Buzz";
+    }
 
-count = Int32.Parse(Console.ReadLine());
- 
+    /* Create FuzzBuzz class then inject the IFizzBuzzRule Interface to do the operation divided by 3 and divided by 5 */
+    class FizzBuzzRule : IFizzBuzzRule
+    {
+        public bool Check(int number) => number % 3 == 0 && number % 5 == 0;
+        public string GetResult(int number) => "Fizz Buzz";
+    }
 
-Console.WriteLine("Enter the numbers one by one");
+    class DefaultRule : IFizzBuzzRule
+    {
+        public bool Check(int number) => true;
+        public string GetResult(int number) => number.ToString();
+    }
 
-for (int i=0; i<=count-1;i++)
-{
-  number[i] = Int32.Parse(Console.ReadLine());
-}
+    class FizzBuzz
+    {
+        private readonly IFizzBuzzRule[] rules;
 
-for (int j=0;j<=count-1;j++)
-{
- 
-  if (number[j] == 1)
-  {
-    output = "Divided 1 By 3" + System.Environment.NewLine + "Divided 1 By 5";
-  Console.WriteLine("output : " + output);
-  }
-  else if (( number[j] == 0 ) || (number[j] == 'A'))
-  {
- output = "Invalid Item";
-  Console.WriteLine("output : " + output);
-  }
-  else if ((number[j] % 3 == 0) && (number[j] % 5 == 0 ))
-  {
- output = "FizzBuzz";
-   Console.WriteLine("output : " + output);
-  }
-  else if (number[j] % 3 == 0 && (number[j] % 5 != 0) )
-  {
- output = "Fizz";
-      Console.WriteLine("output : " + output);
-  }
-  else if (number[j] % 5 == 0 && (number[j] % 3 != 0)) 
-  {
- output = "Buzz";
-      Console.WriteLine("output : " + output);
-  }
-  
-  else if ((number[j] % 3 != 0) && (number[j] % 5 != 0 ))
-  {
- output = "Divided " + number[j] + " By 3 " + System.Environment.NewLine + "Divided " + number[j]  + " By 5 ";
-      Console.WriteLine("output : " + output);
+        public FizzBuzz()
+        {
+           /* Create separate rules from the common rule IFizzBuzzRule */
+            rules = new IFizzBuzzRule[]
+            {
+              new FizzBuzzRule(),
+              new FizzRule(),
+             new BuzzRule(),
+             new DefaultRule()
+            };
+        }
 
-  }
- 
- else
- {
-output = "The input is < 0";
-Console.WriteLine("output : " + output);
- }
-}
+        public string GetResult(int number)
+        {
+            foreach (var rule in rules)
+            {
+                if (rule.Check(number))
+                    return rule.GetResult(number);
+            }
+            return number.ToString();
+        }
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            FizzBuzz fizzBuzz = new FizzBuzz();
 
- }
+            for (int i = 1; i <= 100; i++)
+            {
+                Console.WriteLine(fizzBuzz.GetResult(i));
+            }
+        }
 
-}
-
+    }
