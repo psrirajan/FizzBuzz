@@ -1,6 +1,6 @@
 using System;
 
-/* Create an interface for injecting wherever needed for code reusability */ 
+/* Create an interface for injecting wherever needed for Single Responsibility and Code Separation Principle  */ 
 public interface IFizzBuzzRule
     {
         bool Check(int number);
