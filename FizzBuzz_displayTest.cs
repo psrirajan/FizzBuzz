@@ -1,4 +1,5 @@
 using System;
+using NUnitFramework;
 
 /* Create an interface for injecting wherever needed for Single Responsibility and Code Separation Principle  */ 
 public interface IFizzBuzzRule
@@ -7,33 +8,51 @@ public interface IFizzBuzzRule
         string GetResult(int number);
     }
 
-   /* Create a FizzBuzz class then inject IFizzBuzzRule Interface to do the operation for divided by 3 */
-    class FizzRule : IFizzBuzzRule
-    {
-        public bool Check(int number) => number % 3 == 0;
-        public string GetResult(int number) => "Fizz";
+[TestMethod]
+public void TestFizzRule() {
+    FizzRule mockBuzzRule = new FizzRule();
+    bool result_Fizztrueorfalse  = mockFizzRule.Check(int n) => n % 3 == 0;
+    if (Assert.assertEqual(true, result_Fizztrueorfalse)) {
+        string getResult_Fizz = mockFizzRule.GetResult(n);
+        Assert.assertEqual("FizzRule", getResult_Fizz);
     }
+}
 
-    /* Create BuzzRule class then inject IFizzBuzz Ibterface to do the operation divided by 5 */
-    class BuzzRule : IFizzBuzzRule
-    {
-        public bool Check(int number) => number % 5 == 0;
-        public string GetResult(int number) => "Buzz";
+[TestMethod]
+public void TestBuzzRule() {
+    BuzzRule mockBuzzRule = new BuzzRule();
+    bool result_Buzztrueorfalse  = mockBuzzRule.Check(int n) => n % 3 == 0;
+    if (Assert.assertEqual(true, result_Buzztrueorfalse)) {
+        string getResult_Buzz = mockBuzzRule.GetResult(n);
+        Assert.assertEqual("BuzzRule", getResult_Buzz);
     }
+   
+}
 
-    /* Create FuzzBuzz class then inject the IFizzBuzzRule Interface to do the operation divided by 3 and divided by 5 */
-    class FizzBuzzRule : IFizzBuzzRule
-    {
-        public bool Check(int number) => number % 3 == 0 && number % 5 == 0;
-        public string GetResult(int number) => "Fizz Buzz";
+[TestMethod]
+public voud TestFizzBuzzRule() {
+    FizzBuzzRule mockFizzBuzzRule = new FizzBuzzRule();
+    bool result_FizzBuzztrueorfalse  = mockFizzBuzzRule.Check(int n) => n % 3 == 0;
+    if (Assert.assertEqual(true, result_FizzBuzztrueorfalse)) {
+        string getResult_FizzBuzz = mockFizzBuzzRule.GetResult(n);
+        Assert.assertEqual("FizzBuzzRule", getResult_FizzBuzz);
     }
+    
+}
 
-    class DefaultRule : IFizzBuzzRule
-    {
-        public bool Check(int number) => true;
-        public string GetResult(int number) => number.ToString();
+
+[TestMethod]
+public voud TestDefaultRule() {
+    FizzBuzzRule mockDefaultRule = new DefaultRule();
+    bool result_Defaulttrueorfalse  = mockDefaultRule.Check(int n) => n % 3 == 0;
+    if (Assert.assertEqual(true, result_Defaulttrueorfalse)) {
+        string getResult_Default = mockDefaultRule.GetResult(n);
+        Assert.assertEqual("DefaultRule", getResult_Default);
     }
+    
+}
 
+    [Set]
     class FizzBuzz
     {
         private readonly IFizzBuzzRule[] rules;
